@@ -74,7 +74,7 @@ logger.info(
 )
 
 threwError = False
-while userTickets != 0:
+while userTickets >= 0:
     if threwError:
         logger.error(
             f"Скрипт завершился с ошибкой... Не смог найти кнопку новой игры. Попробуй перезапустить скрипт."
