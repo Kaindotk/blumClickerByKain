@@ -38,7 +38,7 @@ logger.info(
 )
 
 try:
-    claimButton = pyautogui.locateOnScreen(settings.claimButtonPath, confidence=0.4, region=blumWindow)
+    claimButton = pyautogui.locateOnScreen(settings.claimButtonPath, confidence=0.7, region=blumWindow)
     pyautogui.click(claimButton)
 
     logger.success(
@@ -75,11 +75,17 @@ logger.info(
 
 threwError = False
 while userTickets != 0:
-    time.sleep(3)
+    if threwError:
+        logger.error(
+            f"Скрипт завершился с ошибкой... Не смог найти кнопку новой игры. Попробуй перезапустить скрипт."
+        )
+        break
+
+    time.sleep(1)
     for iteration in range(0, settings.retray_find_blumes):
         while True:
             try:
-                allBlumes = list(pyautogui.locateAllOnScreen(settings.blumesPath, confidence=0.73, region=blumWindow))
+                allBlumes = list(pyautogui.locateAllOnScreen(settings.blumesPath, confidence=0.7, region=blumWindow))
                 blumes = random.choice(allBlumes)
 
                 pyautogui.click(blumes)
@@ -87,7 +93,7 @@ while userTickets != 0:
                 logger.info(
                     f"Не смогли найти блюмы... Попопробуем найти их ещё раз. Попытка {iteration}/{settings.retray_find_blumes}"
                 )
-                time.sleep(3)
+                time.sleep(1)
                 break
 
     logger.error(
@@ -96,7 +102,7 @@ while userTickets != 0:
 
     for iteration in range(0, settings.retray_find_newgame_button):
         try:
-            playAgainButton = pyautogui.locateOnScreen(settings.playAgainPath, confidence=0.2,
+            playAgainButton = pyautogui.locateOnScreen(settings.playAgainPath, confidence=0.7,
                                                        region=blumWindow)
             pyautogui.click(playAgainButton)
             logger.success(
@@ -107,6 +113,7 @@ while userTickets != 0:
             logger.error(
                 f"Не удалось найти кнопку новой игры. Попытка {iteration}/{settings.retray_find_newgame_button}."
             )
+            time.sleep(3)
             if iteration == settings.retray_find_newgame_button - 1:
                 logger.error(
                     f"Не удалось за {settings.retray_find_newgame_button} попыток найти кнопку."
@@ -121,11 +128,5 @@ while userTickets != 0:
         f"Тикетов осталось: {userTickets}"
     )
 
-if threwError:
-    logger.error(
-        f"Скрипт завершился с ошибкой... Не смог найти кнопку новой игры. Попробуй перезапустить скрипт."
-    )
-else:
-    logger.success(
-        "Успешно! Все тикеты протыкались. Запустите скрипт для повторной отработки тикетов."
-    )
+if not threwError:
+    logger.success("Удачное выполнение скрипта.")
