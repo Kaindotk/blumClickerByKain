@@ -9,7 +9,7 @@ class Settings():
     playAgainPath = "scriptScreenShots/playAgain.png"
     claimButtonPath = "scriptScreenShots/claimButton.png"
 
-    tickets = 305 # Количество тикетов
+    tickets = 0 # Количество тикетов
 
     retray_find_blum = 3 # Количество попыток поиска окна игры
 

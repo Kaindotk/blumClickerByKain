@@ -38,7 +38,7 @@ logger.info(
 )
 
 try:
-    claimButton = pyautogui.locateOnScreen(settings.claimButtonPath, confidence=0.7, region=blumWindow)
+    claimButton = pyautogui.locateOnScreen(settings.claimButtonPath, confidence=0.4, region=blumWindow)
     pyautogui.click(claimButton)
 
     logger.success(
@@ -96,7 +96,7 @@ while userTickets != 0:
 
     for iteration in range(0, settings.retray_find_newgame_button):
         try:
-            playAgainButton = pyautogui.locateOnScreen(settings.playAgainPath, confidence=0.5,
+            playAgainButton = pyautogui.locateOnScreen(settings.playAgainPath, confidence=0.2,
                                                        region=blumWindow)
             pyautogui.click(playAgainButton)
             logger.success(
