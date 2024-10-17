@@ -67,14 +67,18 @@ except:
 playGameButton = pyautogui.locateOnScreen(settings.playGameButtonPath, confidence=0.8, region=blumWindow)
 pyautogui.click(playGameButton)
 
-userTickets = settings.tickets - 1
+userTickets = settings.tickets
 
 logger.info(
     f"Начинаем играть... Тикетов: {userTickets}"
 )
 
 threwError = False
-while userTickets >= 0:
+while userTickets > 0:
+    userTickets -= 1
+    logger.success(
+        f"Тикетов осталось: {userTickets}"
+    )
     if threwError:
         logger.error(
             f"Скрипт завершился с ошибкой... Не смог найти кнопку новой игры. Попробуй перезапустить скрипт."
@@ -120,13 +124,6 @@ while userTickets >= 0:
                 )
                 threwError = True
                 break
-
-
-
-    userTickets -= 1
-    logger.success(
-        f"Тикетов осталось: {userTickets}"
-    )
 
 if not threwError:
     logger.success("Удачное выполнение скрипта.")
